@@ -6,9 +6,9 @@ import pandas as pd
 import os
 
 def get_reddit_data(subreddits, limit, csv_file_path):
-    REDDIT_ID = 'pVf7UANnO4BViQz8dGZtiQ'
-    REDDIT_SECRET = 'I40zsP4SesKT2xW3MFVWuPx6lQc4EA'
-    USER_AGENT = "MyApp/1.0 by u/bolis_hakim"
+    REDDIT_ID = ''
+    REDDIT_SECRET = ''
+    USER_AGENT = ""
 
     # Reddit API credentials
     reddit = praw.Reddit(
