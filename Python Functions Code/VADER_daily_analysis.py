@@ -9,10 +9,10 @@ from VADER_Sentiment import *
 
 
 # First to Run the collection of Rediit Data
-# get_reddit_data(["Bitcoin", "BitcoinMarkets"], 20, "all_subreddits_data.csv")
+get_reddit_data(["Bitcoin", "BitcoinMarkets"], 20, "all_subreddits_data.csv")
 
 #Call the function to Perform the sentiment analysis in the Redditthe DataFrame
-#perform_sentiment_analysis('all_subreddits_data.csv')
+perform_sentiment_analysis('all_subreddits_data.csv')
 
 #Load Reddit Data for perform the merge and Corrolation
 Reddit_data = pd.read_csv('sentiment_all_subreddits_data.csv')
@@ -33,10 +33,8 @@ crypto_data = fetch_crypto_data(symbol, start_date, end_date, timeframe)
 # Load Cryptocurrency price data
 price_data = pd.read_csv(f'{symbol.replace("/", "_")}_data.csv')
 
-
 # Merge data on the common column ('comment_date' and 'timestamp')
 merged_data = pd.merge(Reddit_data, price_data, left_on='comment_date', right_on='date', how='inner')
-
 
 # Save the DataFrame to a CSV file
 csv_filename = f'merged_data.csv'
@@ -69,8 +67,6 @@ plt.title(f'Correlation {correlation_Price} between Sentiment and Bitcoin Price'
 plt.xlabel('Sentiment (VADER_mean)')
 plt.ylabel('Bitcoin Price (close)')
 plt.show()
-
-
 
 # Plotting Trading Volume Data
 plt.figure(figsize=(8, 5))
