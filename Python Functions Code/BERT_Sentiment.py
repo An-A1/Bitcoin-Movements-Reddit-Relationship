@@ -2,7 +2,7 @@ from transformers import pipeline
 import pandas as pd
 from tqdm import tqdm
 
-def analyze_sentiments(input_csv, output_csv, model_name="cardiffnlp/twitter-roberta-base-sentiment-latest", max_token_length=512):
+def BERT_sentiments(input_csv, output_csv, model_name="cardiffnlp/twitter-roberta-base-sentiment-latest", max_token_length=512):
     sentiment_pipeline = pipeline(model=model_name)
     
     # Read the input CSV file
@@ -42,13 +42,11 @@ def analyze_sentiments(input_csv, output_csv, model_name="cardiffnlp/twitter-rob
     print(sentiment_percentage)
 
     # Calculate mean for each sentiment class
-    mean_sentiments = data.groupby('BERT_class')['BERT_label'].mean()
+    mean_sentiments = data.groupby('BERT_class')['BERT_Compound'].mean()
     print("Mean Sentiments:")
     print(mean_sentiments)
 
 
 
-
-
 # Example usage:
-analyze_sentiments(input_csv='all_subreddits_data.csv', output_csv='sentiment_all_subreddits_data.csv')
+BERT_sentiments(input_csv='Reddit_new.csv', output_csv='BERT_sentiment_data.csv')
