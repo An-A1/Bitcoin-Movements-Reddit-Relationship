@@ -5,10 +5,10 @@ from datetime import datetime, timezone
 import pandas as pd
 import os
 
-def get_reddit_data(subreddits, limit, csv_file_path):
-    REDDIT_ID = ''
-    REDDIT_SECRET = ''
-    USER_AGENT = ""
+def get_reddit_data(subreddits, limit, csv_file_path, filter_words):
+    REDDIT_ID = 'pVf7UANnO4BViQz8dGZtiQ'
+    REDDIT_SECRET = 'I40zsP4SesKT2xW3MFVWuPx6lQc4EA'
+    USER_AGENT = "MyApp/1.0 by u/bolis_hakim"
 
     # Reddit API credentials
     reddit = praw.Reddit(
@@ -57,12 +57,40 @@ def get_reddit_data(subreddits, limit, csv_file_path):
                     'subreddit': sub,
                 }
                 
-                results.append({**data, **comment_data})
+                # Check if the comment contains any of the filter words
+                if any(word in comment.body.lower() for word in filter_words):
+                    results.append({**data, **comment_data})
 
         results_df = pd.DataFrame(results)
         all_results = pd.concat([all_results, results_df], ignore_index=True)
         all_results.drop_duplicates(subset=['comment_id','post_id'], inplace=True)
-        all_results = all_results[all_results['upvotes'] >= 10]
+        #all_results = all_results[all_results['upvotes'] >= 10]
         all_results.to_csv(csv_file_path, index=False, encoding='utf-8')
 
+# Example usage
+subreddit_list = ["Bitcoin", "BitcoinMarkets"]
+csv_path = 'Reddit_data.csv'
+filter_words_list = [
+    'bitcoin', 'btc', 'crypto', 'cryptocurrency',
+    'price', 'value', 'market', 'exchange',
+    'buy', 'sell', 'trade', 'trading',
+    'invest', 'investment', 'investor',
+    'rise', 'increase', 'up', 'bullish',
+    'fall', 'decrease', 'down', 'bearish',
+    'prediction', 'forecast', 'analyze',
+    'chart', 'technical analysis', 'TA',
+    'ATH', 'all-time high', 'dip', 'pump',
+    'dump', 'volatility', 'swing', 'speculation',
+    'HODL', 'FOMO', 'FUD', 'moon', 'lambo',
+    'wallet', 'blockchain', 'hashrate',
+    'mining', 'halving', 'hard fork', 'soft fork',
+    'crash', 'expect', 'money', 'dollar',
+    'period', 'guess', 'see', 'point',
+    'duration', 'time', 'exit', 'out',
+    'short', 'hold','sentiment', 'feel', 'emotion',
+    'positive', 'negative', 'optimistic', 'pessimistic', 
+    'hope', 'fear'
+]
 
+
+# get_reddit_data(subreddit_list, limit=30, csv_file_path=csv_path, filter_words=filter_words_list)
