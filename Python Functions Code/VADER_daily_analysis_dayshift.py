@@ -33,13 +33,16 @@ crypto_data = fetch_crypto_data(symbol, start_date, end_date, timeframe)
 # Load Cryptocurrency price data
 price_data = pd.read_csv(f'{symbol.replace("/", "_")}_data.csv')
 
-#Update the prices to include the dayshift of 1 day. Code moves the price one row upwards
-price_data['shift_close'] = price_data['close'].shift(-1)
+#Update the prices to include the dayshift of 1 day. Code moves the price one row upwards and downwards
+price_data['upwards_shift_close'] = price_data['close'].shift(-1)
+price_data['downwards_shift_close'] = price_data['close'].shift(+1)
 
-# New column that shows the real date of the close value
+# New column that shows the real date of the close values
 price_data['date'] = pd.to_datetime(price_data['date'])
-price_data['shift_date'] = price_data['date'] + pd.to_timedelta(1, unit='D')
-price_data['shift_date'] = price_data['shift_date'].dt.strftime('%Y.%m.%d')
+price_data['upwards_shift_date'] = price_data['date'] + pd.to_timedelta(1, unit='D')
+price_data['upwards_shift_date'] = price_data['upwards_shift_date'].dt.strftime('%Y.%m.%d')
+price_data['downwards_shift_date'] = price_data['date'] + pd.to_timedelta(-1, unit='D')
+price_data['downwards_shift_date'] = price_data['downwards_shift_date'].dt.strftime('%Y.%m.%d')
 
 # Merge data on the common column ('comment_date' and 'timestamp')
 merged_data = pd.merge(Reddit_data, price_data, left_on='comment_date', right_on='date', how='inner')
@@ -52,9 +55,13 @@ merged_data.to_csv(csv_filename, index=False)
 correlation_volume = round(merged_data['VADER_mean'].corr(merged_data['volume']),3)
 print(f"Correlation between sentiment and Bitcoin Trading Volume: {correlation_volume}")
 
-# Calculate correlation between Reddit Sentiment Data and Cryptocurrency price
-correlation_Price = round(merged_data['VADER_mean'].corr(merged_data['close']),3)
-print(f"Correlation between sentiment and Bitcoin price: {correlation_Price}")
+# Calculate correlation between Reddit Sentiment Data and upwards dayshift Cryptocurrency price
+upwards_correlation_Price = round(merged_data['VADER_mean'].corr(merged_data['upwards_shift_close']),3)
+print(f"Correlation between sentiment and Bitcoin price: {upwards_correlation_Price}")
+
+# Calculate correlation between Reddit Sentiment Data and downwards dayshift Cryptocurrency price
+downwards_correlation_Price = round(merged_data['VADER_mean'].corr(merged_data['downwards_shift_close']),3)
+print(f"Correlation between sentiment and Bitcoin price: {downwards_correlation_Price}")
 
 # Plot the correlation
 plt.scatter(merged_data['VADER_mean'], merged_data['volume'])
@@ -66,14 +73,24 @@ plt.xlabel('Sentiment (VADER_mean)')
 plt.ylabel('Bitcoin Price (close)')
 plt.show()
 
-# Plot the correlation
-plt.scatter(merged_data['VADER_mean'], merged_data['close'])
+# Plot the upwards correlation
+plt.scatter(merged_data['VADER_mean'], merged_data['upwards_shift_close'])
 #obtain m (slope) and b(intercept) of linear regression line
-m, b = np.polyfit(merged_data['VADER_mean'], merged_data['close'], 1)
+m, b = np.polyfit(merged_data['VADER_mean'], merged_data['upwards_shift_close'], 1)
 plt.plot(merged_data['VADER_mean'], m*merged_data['VADER_mean']+b, color='red', label='Regression Line')
-plt.title(f'Correlation {correlation_Price} between Sentiment and Bitcoin Price')
+plt.title(f'Correlation {upwards_correlation_Price} between Sentiment and Bitcoin Price with dayshift of +1 day')
 plt.xlabel('Sentiment (VADER_mean)')
-plt.ylabel('Bitcoin Price (close)')
+plt.ylabel('Bitcoin Price (upwards_shift_close)')
+plt.show()
+
+# Plot the downwards correlation
+plt.scatter(merged_data['VADER_mean'], merged_data['downwards_shift_close'])
+#obtain m (slope) and b(intercept) of linear regression line
+m, b = np.polyfit(merged_data['VADER_mean'], merged_data['downwards_shift_close'], 1)
+plt.plot(merged_data['VADER_mean'], m*merged_data['VADER_mean']+b, color='red', label='Regression Line')
+plt.title(f'Correlation {upwards_correlation_Price} between Sentiment and Bitcoin Price with dayshift of -1 day')
+plt.xlabel('Sentiment (VADER_mean)')
+plt.ylabel('Bitcoin Price (downwards_shift_close)')
 plt.show()
 
 # Plotting Trading Volume Data
