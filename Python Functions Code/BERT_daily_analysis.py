@@ -25,7 +25,7 @@ Reddit_data['comment_date'] = Reddit_data['comment_date'].dt.strftime('%Y-%m-%d'
 Reddit_data = Reddit_data.groupby('comment_date').agg(BERT_Compound=('BERT_Compound', 'mean')).reset_index()
 
 # Second to Run the collection of Cryptocurrency price action
-start_date = (datetime.now() - timedelta(days=30)).strftime('%Y.%m.%d')
+start_date = (datetime.now() - timedelta(days=50)).strftime('%Y.%m.%d')
 end_date = (datetime.now()).strftime('%Y.%m.%d')
 symbol = 'BTC/USDT'
 timeframe = '1d'
