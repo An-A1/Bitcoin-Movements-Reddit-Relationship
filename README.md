@@ -10,12 +10,14 @@ The regression Analysis included does indeed prove the existince of a relationsh
 Reproducibility:
 
 Python Functions codes (folder) 
+                              
+                                - in it all all the .py needed, and:
 
-                                -> Data(Folder) => All the CSVs needed 
+                                    - Data(Folder) => All the CSVs needed 
 
-                                -> All the .py files needed 
                                 
-                                -> Visualization(Folder) -> all the results graphs
+                                
+                                    - Visualization(Folder) -> all the results graphs
 
 Note:
 
