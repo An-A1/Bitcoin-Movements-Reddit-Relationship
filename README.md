@@ -1,4 +1,4 @@
-# CryptoSentiment Analysis: Unveiling Market Trends through Sentiment Exploration (FCSS- Final Project)
+# CryptoSentiment Analysis: Unveiling Market Trends through Sentiment Exploration (FCSS - Final Project)
 
 
 
