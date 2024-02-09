@@ -9,7 +9,9 @@ The regression Analysis included does indeed prove the existince of a relationsh
 
 Reproducibility:
 
-Python Functions codes (folder) -> Data(Folder) => All the CSVs needed 
+Python Functions codes (folder) 
+
+                                -> Data(Folder) => All the CSVs needed 
 
                                 -> All the .py files needed 
                                 
