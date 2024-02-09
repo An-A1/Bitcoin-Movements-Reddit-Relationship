@@ -11,11 +11,9 @@ Reproducibility:
 
 Python Functions codes (folder) 
                               
-    - in it all all the .py needed, and:
-
-      - Data(Folder) => All the CSVs needed 
-      
-      - Visualization(Folder) -> all the results graphs
+- in it all all the .py needed, and:
+- Data(Folder) => All the CSVs needed 
+- Visualization(Folder) -> all the results graphs
 
 Note:
 
