@@ -9,9 +9,9 @@ The regression Analysis included does indeed prove the existince of a relationsh
 
 Reproducibility:
 
-This can be done using two elements the Data CSVs and the Code files.
-
-In the folder named Python function code, you would find two folders (Data) which includes all the CSVs related to the project, and (Code) which includes all the .py files needed in order to reprduce the results.
+Python Functions codes (folder) -> Data(Folder) => All the CSVs needed 
+                                -> All the .py files needed 
+                                -> Visualization(Folder) -> all the results graphs
 
 Note:
 
