@@ -1,6 +1,5 @@
-# CryptoSentiment Analysis: Unveiling Market Trends through Sentiment Exploration
+# CryptoSentiment Analysis: Unveiling Market Trends through Sentiment Exploration (FCSS- Final Project)
 
-The final Project for the Foundation of Computational soical systems
 
 
 Summary:
